@@ -22,7 +22,14 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
         const query = {}
         const result = await productCollection.find(query).toArray()
         res.send(result)
-       })
+       });
+
+      app.post('/product' , async(req,res) =>{
+        const product = req.body
+        const result = await productCollection.insertOne(product)
+        res.send(product)
+      })
+
       }
 
       finally{
