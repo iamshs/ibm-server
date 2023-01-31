@@ -1,5 +1,5 @@
 const express = require('express')
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const app = express()
 const cors = require('cors');
@@ -28,6 +28,13 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
         const product = req.body
         const result = await productCollection.insertOne(product)
         res.send(product)
+      })
+
+      app.delete('/product/:id' , async(req,res)=>{
+        const id = req.params.id
+        const filter = { _id : ObjectId(id)}
+        const result = productCollection.deleteOne(filter)
+        res.send(result)
       })
 
       }
