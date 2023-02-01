@@ -37,6 +37,19 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
         res.send(result)
       })
 
+      app.patch('/product/:id' , async(req,res) =>{
+        const id = req.params.id
+        const product = req.body
+        const filter = { _id: ObjectId(id)}
+        const updatedDoc ={
+          $set : {
+              product : product 
+          }
+        }
+        const result = await productCollection.updateOne(filter , updatedDoc)
+        res.send(result)
+      })
+
       }
 
       finally{
